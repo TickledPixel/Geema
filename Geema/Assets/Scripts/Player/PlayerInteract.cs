@@ -12,24 +12,37 @@ public class PlayerInteract : MonoBehaviour
     private float distance = 3f;
     [SerializeField]
     private LayerMask mask;
+    private PlayerUI playerUI;
+    private InputManager inputManager;
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<PlayerLook>().cam;
+        playerUI = GetComponent<PlayerUI>();
+        inputManager = GetComponent<InputManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        playerUI.UpdateText(string.Empty);
+        //create a ray at the center of that camera shooting forward
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * distance);
 
-        RaycastHit hitInfo; //Variable toi store our collision information
+        RaycastHit hitInfo; //Variable to store our collision information
         if (Physics.Raycast(ray, out hitInfo, distance, mask))
         {
             if(hitInfo.collider.GetComponent<Interactable>() != null)
             {
-                Debug.Log(hitInfo.collider.GetComponent<Interactable>().promptMessage);
+                Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
+                //Debug.Log(hitInfo.collider.GetComponent<Interactable>().promptMessage);
+                playerUI.UpdateText(hitInfo.collider.GetComponent<Interactable>().promptMessage);
+                if (inputManager.onFoot.Interact.triggered)
+                {
+                    interactable.BaseInteract();
+                }
+
             }
         }
         
