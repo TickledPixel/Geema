@@ -19,8 +19,7 @@ public abstract class Interactable : MonoBehaviour
         {
             GetComponent<InteractionEvent>().OnInteract.Invoke();
         }  
-        Interact();
-        
+        Interact();   
     }
     protected virtual void Interact()
     {

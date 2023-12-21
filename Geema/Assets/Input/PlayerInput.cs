@@ -922,8 +922,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_OnFoot_Sprint;
         public InputAction @Interact => m_Wrapper.m_OnFoot_Interact;
         public InputActionMap Get() { return m_Wrapper.m_OnFoot; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
+        public void Enable() => Get().Enable();
+        public void Disable() => Get().Disable();
         public bool enabled => Get().enabled;
         public static implicit operator InputActionMap(OnFootActions set) { return set.Get(); }
         public void AddCallbacks(IOnFootActions instance)
